@@ -1,0 +1,51 @@
+.task {
+   display: flex;
+   align-items: center;
+   position: relative;
+   margin-top: 15px;
+   width: 100%;
+   &__value {
+      margin-left: 18px;
+      font-size: 18px;
+      color: black;
+      opacity: 0.7;
+
+      max-width: 460px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      cursor: default;
+
+      &:hover {
+         opacity: 0.9;
+      }
+
+      &:active {
+         opacity: 1;
+      }
+   }
+
+   &__category {
+      margin-left: 18px;
+      background: #ea5959;
+      border-radius: 4px;
+      padding: 5px 20px;
+      color: white;
+      cursor: pointer;
+   }
+
+   &__delete-icon {
+      position: absolute;
+      right: 5px;
+      cursor: pointer;
+
+      &:hover {
+         color: #ea5959;
+      }
+
+      &:active {
+         lighting-color: #ea5959;
+      }
+   }
+}

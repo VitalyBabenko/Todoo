@@ -1,0 +1,27 @@
+.checkbox {
+   display: none;
+}
+.checkbox + label {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border: 1px solid #ea5959;
+   width: 28px;
+   height: 28px;
+   border-radius: 8px;
+   cursor: pointer;
+}
+.checkbox + label:before {
+   content: "";
+}
+.checkbox:checked + label {
+   background-color: #ea5959;
+}
+.checkbox:checked + label:before {
+   color: white;
+}
+
+.check-mark {
+   width: 15px;
+   height: 15px;
+}

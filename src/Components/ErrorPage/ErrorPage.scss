@@ -1,0 +1,25 @@
+.error {
+   width: 480px;
+   height: 288px;
+   margin: 150px auto;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+
+   &__number {
+      font-weight: 700;
+      font-size: 96px;
+      color: #ea5959;
+   }
+   &__title {
+      font-size: 32px;
+      color: #525252;
+      margin-bottom: 15px;
+   }
+   &__discriptoin {
+      font-size: 20px;
+      text-align: center;
+      color: #525252;
+   }
+}

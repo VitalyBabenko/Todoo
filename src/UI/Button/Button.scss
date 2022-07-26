@@ -1,0 +1,40 @@
+.button {
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #fd0000;
+  border-radius: 4px;
+  padding: 5px;
+  color: white;
+
+  &:hover {
+    background-color: #ea5959;
+  }
+
+  &:active {
+    background-color: #ff4400;
+  }
+}
+
+.loader {
+  border: 6px solid #dfdede;
+  border-top: 6px solid #ea5959;
+  background-color: #f3f3f3;
+  border-radius: 50%;
+  width: 25px !important;
+  height: 25px !important;
+  font-size: 0;
+  animation: spin 2s linear infinite;
+  margin-right: 13px;
+  cursor: default;
+
+  &:hover {
+    background-color: #dfdede;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

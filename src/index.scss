@@ -1,0 +1,28 @@
+@import "scss-reset/_reset.scss";
+
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #ea5959;
+}
+
+.app {
+  display: flex;
+  margin: 60px auto;
+  background-color: #fff;
+  width: 980px;
+  height: 700px;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+}
+
+
+.input {
+  background: #f3f3f3;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}

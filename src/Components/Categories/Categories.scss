@@ -1,0 +1,28 @@
+.categories {
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   padding: 25px;
+   width: 230px;
+   height: 100%;
+   border-right: 1px solid #d8d8d8;
+
+   &__logo {
+      cursor: pointer;
+   }
+
+   &__list {
+      margin-top: 60px;
+      overflow: auto;
+   }
+
+   &__input {
+      margin-top: 20px;
+   }
+
+   &__button {
+      align-self: flex-end;
+      width: 70px;
+      margin-top: 8px;
+   }
+}
