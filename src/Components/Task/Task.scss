@@ -1,6 +1,7 @@
+@import "../../index.scss";
+
 .task {
-   display: flex;
-   align-items: center;
+   @include flex($align: center);
    position: relative;
    margin-top: 15px;
    width: 100%;
@@ -9,7 +10,6 @@
       font-size: 18px;
       color: black;
       opacity: 0.7;
-
       max-width: 460px;
       white-space: nowrap;
       overflow: hidden;
@@ -28,7 +28,7 @@
 
    &__category {
       margin-left: 18px;
-      background: #ea5959;
+      background: $pink;
       border-radius: 4px;
       padding: 5px 20px;
       color: white;
@@ -41,11 +41,11 @@
       cursor: pointer;
 
       &:hover {
-         color: #ea5959;
+         color: $pink;
       }
 
       &:active {
-         lighting-color: #ea5959;
+         lighting-color: $pink;
       }
    }
 }

@@ -1,10 +1,12 @@
 import React, { useState, useContext } from 'react'
 import './Categories.scss'
-import { TodoContext } from '../context'
-import { ListServiсe, TaskServiсe } from '../../API/Serviсe'
+import { TodoContext } from '../../context'
+import { ListServiсe, TaskServiсe } from '../../api/Serviсe'
 import List from '../List/List'
-import Button from '../../UI/Button/Button'
+import Button from '../../ui/Button/Button'
+import Input from '../../ui/Input/Input'
 import { useFetching } from '../../hooks/useFetching'
+
 
 function Categories() {
   const { lists, setLists, setChosenList, navigate } = useContext(TodoContext)
@@ -20,9 +22,9 @@ function Categories() {
   })
 
   const deleteList = async (deletedList) => {
-    setLists(lists.filter(list => list.id !== deletedList.id))
     await TaskServiсe.deleteTasksInList(deletedList)
     await ListServiсe.deleteList(deletedList)
+    setLists(lists.filter(list => list.id !== deletedList.id))
     navigate('/lists/1')
     setChosenList(lists[0])
   }
@@ -45,7 +47,7 @@ function Categories() {
           />
         )}
       </ul>
-      <input
+      <Input
         value={newList}
         onChange={e => setNewList(e.target.value)}
         className='categories__input input'

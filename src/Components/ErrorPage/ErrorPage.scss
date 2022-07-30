@@ -1,25 +1,25 @@
+@import "../../index.scss";
+
 .error {
+   @include flex-center;
+   flex-direction: column;
    width: 480px;
    height: 288px;
    margin: 150px auto;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
 
    &__number {
       font-weight: 700;
       font-size: 96px;
-      color: #ea5959;
+      color: $pink;
    }
    &__title {
       font-size: 32px;
-      color: #525252;
+      color: $font-color;
       margin-bottom: 15px;
    }
    &__discriptoin {
       font-size: 20px;
       text-align: center;
-      color: #525252;
+      color: $font-color;
    }
 }

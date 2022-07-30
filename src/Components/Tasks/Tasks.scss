@@ -1,6 +1,7 @@
+@import "../../index.scss";
+
 .tasks {
-   display: flex;
-   flex-direction: column;
+   @include flex($direction: column);
    position: relative;
    flex: 1;
    padding: 65px 40px 40px 55px;
@@ -20,6 +21,13 @@
 
    &__items {
       overflow: auto;
+   }
+
+   &__undo {
+      text-align: center;
+      margin-top: 20px;
+      align-self: flex-end;
+      width: 150px;
    }
 }
 

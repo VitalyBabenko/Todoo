@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import './Task.scss'
 import { BiTrashAlt } from "react-icons/bi"
-import Checkbox from '../../UI/Checkbox/Checkbox'
-import { TodoContext } from '../context'
+import Checkbox from '../../ui/Checkbox/Checkbox'
+import { TodoContext } from '../../context'
 
 function Task({ task, deleteTask, title, list }) {
    const { setChosenList, navigate } = useContext(TodoContext)

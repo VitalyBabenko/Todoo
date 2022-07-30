@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react'
-import { TodoContext } from '../context'
+import { TodoContext } from '../../context'
 import './Tasks.scss'
-import Button from '../../UI/Button/Button'
+import Button from '../../ui/Button/Button'
 import Task from '../Task/Task'
-import { TaskServiсe, ListServiсe } from '../../API/Serviсe'
+import { TaskServiсe, ListServiсe } from '../../api/Serviсe'
 import { useFetching } from '../../hooks/useFetching'
+import Input from '../../ui/Input/Input'
 
 
 function Tasks() {
@@ -37,7 +38,7 @@ function Tasks() {
             {chosenList.title}
          </h1>
 
-         <input
+         <Input
             value={newTask.value}
             onChange={e => setNewTask({ value: e.target.value, listId: currentPage })}
             className='tasks__input input'
@@ -68,8 +69,13 @@ function Tasks() {
                      deleteTask={() => deleteTask(task)}
                   />))
             }
-
          </ul>
+         <Button
+            className={'tasks__undo'}
+            title={'Undo action'}
+            onClick={() => console.log(window.history)}
+         />
+
 
       </div>
    )

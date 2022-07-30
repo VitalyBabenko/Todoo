@@ -1,22 +1,24 @@
+@import "../../index.scss";
+
 .button {
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #fd0000;
+  background: $pink;
   border-radius: 4px;
   padding: 5px;
   color: white;
 
   &:hover {
-    background-color: #ea5959;
+    background-color: lighten($pink, 10%);
   }
 
   &:active {
-    background-color: #ff4400;
+    background-color: saturate($pink, 20%);
   }
 }
 
 .loader {
   border: 6px solid #dfdede;
-  border-top: 6px solid #ea5959;
-  background-color: #f3f3f3;
+  border-top: 6px solid $pink;
+  background-color: $grey;
   border-radius: 50%;
   width: 25px !important;
   height: 25px !important;

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Categories from "./Components/Categories/Categories";
-import { ListServiсe } from "./API/Serviсe";
-import Tasks from "./Components/Tasks/Tasks";
-import ErrorPage from "./Components/ErrorPage/ErrorPage";
-import { TodoContext } from './Components/context'
+import Categories from "./components/Categories/Categories";
+import { ListServiсe } from "./api/Serviсe";
+import Tasks from "./components/Tasks/Tasks";
+import ErrorPage from "./components/ErrorPage/ErrorPage";
+import { TodoContext } from './context'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useFetching } from "./hooks/useFetching.js";
-import { TasksLoader, CategoriesLoader } from "./Components/Loader/Loader";
+import { TasksLoader, CategoriesLoader } from "./components/Loader/Loader";
 
 function App() {
   const [lists, setLists] = useState([])
@@ -24,7 +24,7 @@ function App() {
 
   useEffect(() => {
     fetchData()
-  }, [], [lists, currentPage])
+  }, [])
 
   return (
     <TodoContext.Provider value={{
@@ -38,7 +38,6 @@ function App() {
 
       <div className="app">
         {error ? <ErrorPage /> :
-
           isLoading ?
             <>
               <CategoriesLoader />
@@ -55,8 +54,7 @@ function App() {
                     path={`lists/${list.id}`}
                     element={<Tasks />} />)}
               </Routes>
-            </>
-        }
+            </>}
       </div>
     </TodoContext.Provider>
   );

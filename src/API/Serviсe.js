@@ -1,11 +1,15 @@
 import axios from "axios";
 
+const mockapi = axios.create({
+   baseURL: 'https://62c6bbd02b03e73a58d57240.mockapi.io/'
+})
+
 
 class ListServiсe {
 
    static async getLists() {
       try {
-         const response = await axios.get('https://62c6bbd02b03e73a58d57240.mockapi.io/lists')
+         const response = await mockapi.get('lists/')
          return response.data
       } catch {
          console.log('Can`t get list')
@@ -14,7 +18,7 @@ class ListServiсe {
 
    static async postList(obj) {
       try {
-         await axios.post(`https://62c6bbd02b03e73a58d57240.mockapi.io/lists`, obj)
+         await mockapi.post('lists/', obj)
       } catch {
          console.log('Can`t post obj')
       }
@@ -22,7 +26,7 @@ class ListServiсe {
 
    static async deleteList(delitedList) {
       try {
-         await axios.delete(`https://62c6bbd02b03e73a58d57240.mockapi.io/lists/${delitedList.id}`);
+         await mockapi.delete('lists/' + delitedList.id);
       } catch {
          console.log('Can`t delete list')
       }
@@ -41,7 +45,7 @@ class TaskServiсe {
 
    static async postTask(obj) {
       try {
-         await axios.post(`https://62c6bbd02b03e73a58d57240.mockapi.io/lists/${obj.listId}/tasks`, obj)
+         await mockapi.post(`lists/${obj.listId}/tasks/`, obj)
       } catch {
          console.log(`Can't post obj`)
       }
@@ -50,15 +54,15 @@ class TaskServiсe {
 
    static async deleteTask(task) {
       try {
-         await axios.delete(`https://62c6bbd02b03e73a58d57240.mockapi.io/lists/${task.listId}/tasks/${task.id}`)
+         await mockapi.delete(`lists/${task.listId}/tasks/${task.id}`)
       } catch {
          console.log(`Can't delete task: ${task}`)
       }
    }
 
-   static async putTask(task) {
+   static async putTask(listId, taskId, isDone) {
       try {
-         await axios.put(`https://62c6bbd02b03e73a58d57240.mockapi.io/lists/${task.listId}/tasks/${task.id}`, task)
+         await mockapi.put(`lists/${listId}/tasks/${taskId}`, { done: isDone },)
       } catch (err) {
          console.log(err)
       }

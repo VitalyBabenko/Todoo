@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { TodoContext } from '../context'
+import { TodoContext } from '../../context'
 import { BiX } from "react-icons/bi"
 import './List.scss'
 import { Link } from 'react-router-dom'
@@ -17,7 +17,11 @@ function List({ list, deleteList }) {
             </span>
             {list.id !== '1' &&
                <BiX
-                  onClick={() => (deleteList(list))}
+                  onClick={e => {
+                     e.preventDefault()
+                     e.stopPropagation()
+                     deleteList(list)
+                  }}
                   className='delete-item'
                />}
          </li>

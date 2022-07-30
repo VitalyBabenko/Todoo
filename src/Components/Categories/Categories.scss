@@ -1,7 +1,7 @@
+@import "../../index.scss";
+
 .categories {
-   display: flex;
-   flex-direction: column;
-   justify-content: flex-start;
+   @include flex($direction: column, $justify: flex-start);
    padding: 25px;
    width: 230px;
    height: 100%;
