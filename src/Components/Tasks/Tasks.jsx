@@ -70,13 +70,6 @@ function Tasks() {
                   />))
             }
          </ul>
-         <Button
-            className={'tasks__undo'}
-            title={'Undo action'}
-            onClick={() => console.log(window.history)}
-         />
-
-
       </div>
    )
 }
