@@ -2,12 +2,12 @@
 
 Todoo - a simple task manager that will help you sort all the tasks into categories
 
-![TodooApp screenshot](https://raw.githubusercontent.com/VitalyBabenko/Todoo/511371daa99282954b9245d3d14d687a9084af1e/public/img/logo.svg)
-<br>
+
+### Screenshot:
+![TodooApp screenshot](https://github.com/VitalyBabenko/Todoo/blob/main/public/img/TodooAppScreenshot.png?raw=true)
+
 
 ## Running:
----
-<br>
 
 ### To start the project, you need to perform several actions:
 
@@ -16,7 +16,7 @@ Todoo - a simple task manager that will help you sort all the tasks into categor
 3. Install node_modules
 4. Start development server
 
-<br>
+
 
 ### Console commands:
 ```
@@ -26,10 +26,10 @@ npm install
 npm start
 ```
 This will run locally and listening on port 3000 (http://localhost:3000)
-<br>
-<br>
+
+
 ## API 
----
+
 The application uses [Mockapi](https://mockapi.io/) as a database in the file Service.js, <br>
 in this file you can replace baseURL and connect your database.
 
