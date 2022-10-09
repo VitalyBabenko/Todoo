@@ -1,27 +1,32 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import './Task.scss'
 import { BiTrashAlt } from "react-icons/bi"
 import Checkbox from '../../ui/Checkbox/Checkbox'
-import { TodoContext } from '../../context'
+import { deleteTask } from '../../asyncAction'
+import {useDispatch, useSelector} from "react-redux"
+import { useLocation } from 'react-router-dom'
 
-function Task({ task, deleteTask, title, list }) {
-   const { setChosenList, navigate } = useContext(TodoContext)
-
-   const changeChosenList = () => {
-      setChosenList(list)
-      navigate(`/lists/${list.id}`)
+function Task({ task }) {
+   const dispatch = useDispatch();
+   const location = useLocation();
+   const currentPage = +location.pathname.split('/').slice(-1);
+   const lists = useSelector(state => state.lists)
+   
+   const getListName = () => {
+      let result = ''
+      lists.forEach(list => +list.id === +task.listId ? result = list.title : '')
+      return result
    }
-
+  
    return (
       <li className="task">
          <Checkbox task={task} />
-         <p className='task__value' >{task.value}</p>
-         {title ?
-            <div onClick={changeChosenList} className="task__category">{title}</div> : ''}
-         <BiTrashAlt
-            className='task__delete-icon'
-            onClick={() => deleteTask(task)}
-         />
+         <p>{task.value}</p>
+
+         {currentPage === 1 &&
+            <span>{getListName()}</span>}
+         
+         <BiTrashAlt onClick={() => dispatch(deleteTask(task))}/>
       </li>
    )
 }

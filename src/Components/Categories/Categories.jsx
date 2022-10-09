@@ -1,62 +1,65 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import './Categories.scss'
-import { TodoContext } from '../../context'
-import { ListServiсe, TaskServiсe } from '../../api/Serviсe'
 import List from '../List/List'
 import Button from '../../ui/Button/Button'
 import Input from '../../ui/Input/Input'
-import { useFetching } from '../../hooks/useFetching'
+import { useSelector,useDispatch } from "react-redux";
+import {createList} from '../../asyncAction'
+import { useNavigate } from 'react-router-dom'
+import Burger from '../../ui/Burger/Burger'
+
 
 
 function Categories() {
-  const { lists, setLists, setChosenList, navigate } = useContext(TodoContext)
   const [newList, setNewList] = useState('')
+  const dispatch = useDispatch()
+  const lists = useSelector(state => state.lists);
+  const isBurgerChecked = useSelector(state => state.isBurgerChecked);
+  const navigate = useNavigate()
 
-  const [addList, addListLoading] = useFetching(async () => {
-    if (newList.length) {
-      await ListServiсe.postList({ title: newList, id: '', tasks: [] })
-      const updatedList = await ListServiсe.getLists()
-      setLists(updatedList)
-    }
+  // console.log(isBurgerChecked)
+  
+
+  const getNewListId = () => {
+    let result = 0;
+    lists.forEach(list => {
+       if (+list.id > result) result = +list.id;
+    })
+    return result + 1
+ }
+
+  const addList = (title) => {
+    dispatch(createList({ id: getNewListId(), title: title, tasks: [] }))
     setNewList('')
-  })
-
-  const deleteList = async (deletedList) => {
-    await TaskServiсe.deleteTasksInList(deletedList)
-    await ListServiсe.deleteList(deletedList)
-    setLists(lists.filter(list => list.id !== deletedList.id))
-    navigate('/lists/1')
-    setChosenList(lists[0])
   }
 
   return (
     <div className='categories' >
+      
       <img
-        className='categories__logo'
-        onClick={() => {
-          setChosenList(lists[0]);
-          navigate('/lists/1')
-        }}
+        onClick={() => navigate('lists/1')} 
         src='/img/logo.svg' alt='logo' />
-      <ul className='categories__list'>
+
+      <Burger/>
+
+      <ul className={isBurgerChecked ? 'active' : ''} >
         {lists.map(list =>
           <List
             key={list.id}
             list={list}
-            deleteList={deleteList}
           />
         )}
       </ul>
+
       <Input
         value={newList}
         onChange={e => setNewList(e.target.value)}
-        className='categories__input input'
         type="text"
         placeholder='New category' />
+      
       <Button
-        onClick={addList}
+        onClick={() => addList(newList)}
         title={'Add'}
-        className={addListLoading ? 'categories__button loader' : 'categories__button'}
       />
     </div>
   )

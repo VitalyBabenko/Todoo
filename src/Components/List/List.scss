@@ -1,40 +1,41 @@
 @import "../../index.scss";
 
 .categories {
-   &__item {
+   li {
       @include flex($justify: space-between, $align: flex-end);
       margin-left: 3px;
       font-size: 22px;
       line-height: 26px;
       color: $font-color;
       margin-bottom: 20px;
-      &:hover {
+
+      :hover {
          .delete-item {
             opacity: 0.4;
          }
       }
 
-      &:active {
+      :active {
          .delete-item {
             opacity: 0.9;
          }
       }
    }
 
-   &__title {
+   span {
       width: 160px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
    }
-}
 
-.chosen {
-   font-weight: 700;
-   color: $pink;
-}
+   .delete-item {
+      color: black;
+      opacity: 0.1;
+   }
 
-.delete-item {
-   color: black;
-   opacity: 0.1;
+   .chosen {
+      font-weight: 700;
+      color: $pink;
+   }
 }

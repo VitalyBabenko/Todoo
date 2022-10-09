@@ -1,43 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Categories from "./components/Categories/Categories";
-import { ListServiсe } from "./api/Serviсe";
 import Tasks from "./components/Tasks/Tasks";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
-import { TodoContext } from './context'
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { useFetching } from "./hooks/useFetching.js";
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { TasksLoader, CategoriesLoader } from "./components/Loader/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import {getData} from './asyncAction'
+
 
 function App() {
-  const [lists, setLists] = useState([])
-  const [chosenList, setChosenList] = useState([])
-  const [fetchData, isLoading, error] = useFetching(async () => {
-    const listResponse = await ListServiсe.getLists()
-    setLists(listResponse)
-    setChosenList(listResponse[0])
-    navigate(`/lists/1`)
-  })
-
-  let location = useLocation()
-  const currentPage = +location.pathname.split('/').slice(-1)
   let navigate = useNavigate()
+  const dispatch = useDispatch()
+  const lists = useSelector(state => state.lists)
+  const isLoading = useSelector(state => state.isLoading)
+  const isError = useSelector(state => state.isError)
 
   useEffect(() => {
-    fetchData()
+    dispatch(getData())
+    navigate('lists/1')
   }, [])
 
   return (
-    <TodoContext.Provider value={{
-      lists,
-      setLists,
-      chosenList,
-      setChosenList,
-      currentPage,
-      navigate,
-    }} >
-
       <div className="app">
-        {error ? <ErrorPage /> :
+        {isError ? <ErrorPage /> :
           isLoading ?
             <>
               <CategoriesLoader />
@@ -56,7 +41,6 @@ function App() {
               </Routes>
             </>}
       </div>
-    </TodoContext.Provider>
   );
 }
 

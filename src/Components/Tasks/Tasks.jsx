@@ -1,74 +1,73 @@
-import React, { useState, useContext } from 'react'
-import { TodoContext } from '../../context'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import { useLocation } from 'react-router-dom'
+
 import './Tasks.scss'
 import Button from '../../ui/Button/Button'
 import Task from '../Task/Task'
-import { TaskServiсe, ListServiсe } from '../../api/Serviсe'
-import { useFetching } from '../../hooks/useFetching'
 import Input from '../../ui/Input/Input'
-
+import {createTask} from '../../asyncAction'
 
 function Tasks() {
-   const { lists, setLists, chosenList, setChosenList, currentPage } = useContext(TodoContext)
    const [newTask, setNewTask] = useState({ value: '' })
+   const lists = useSelector(state => state.lists)
+   const tasks = useSelector(state => state.tasks)
+   const dispatch = useDispatch()
+   const location = useLocation()
+   const currentPage = +location.pathname.split('/').slice(-1)
 
-   const [addTask, addTaskLoading] = useFetching(async () => {
-      await TaskServiсe.postTask(newTask)
-      const updatedList = await ListServiсe.getLists()
-      await setLists(updatedList)
-      updatedList.forEach(list => list.id === chosenList.id ? setChosenList(list) : '')
-      setNewTask({ value: '', listId: null })
-   })
-
-   const deleteTask = async (deletedTask) => {
-      const newList =
-         lists.map(list => {
-            if (list.id === deletedTask.listId) {
-               list.tasks = list.tasks.filter(task => task.id !== deletedTask.id)
-            }
-            return list
-         })
-      setLists(newList)
-      await TaskServiсe.deleteTask(deletedTask)
+   const getNewTaskId = () => {
+      let result = 0;
+      tasks.forEach(task => {
+         if (+task.id > result) result = +task.id;
+      })
+      return result + 1
    }
+
+   const addTask = (newTask) => {
+      dispatch(createTask(newTask))
+      setNewTask({ value: '' })
+   }
+
+   const getPageTitle = () => {
+      let result = '';
+      lists.forEach(list => +list.id === currentPage ? result = list.title : null)
+      return result
+   }
+
+   const taskFilter = (tasks) => {
+      if (+currentPage === 1) {
+         return tasks
+      } else {
+        return tasks.filter(task => +task.listId === +currentPage)
+      } 
+   }
+
+   const filtredTasks = taskFilter(tasks);
 
    return (
       <div className='tasks' >
-         <h1 className='tasks__title' >
-            {chosenList.title}
-         </h1>
+         <h1>{getPageTitle()}</h1>
 
          <Input
             value={newTask.value}
-            onChange={e => setNewTask({ value: e.target.value, listId: currentPage })}
-            className='tasks__input input'
-            type="text"
-            placeholder={`Create task on '${chosenList.title}' category`} />
+            onChange={e => setNewTask({ value: e.target.value, listId: currentPage, id: getNewTaskId(), done:false })}
+            placeholder={`Create task on '${getPageTitle()}' category`}
+            type="text" />
+         
          {newTask.value &&
             <Button
                onClick={() => addTask(newTask)}
                title={'Create new task'}
-               className={addTaskLoading ? 'loader new-task-btn' : 'new-task-btn'}
             />}
-         <hr className='tasks__line' />
-         <ul className='tasks__items' >
-            {currentPage !== 1 ?
-               chosenList.tasks.map(task =>
-                  <Task
-                     key={task.id}
-                     task={task}
-                     deleteTask={() => deleteTask(task)}
-                  />)
-               :
-               lists.map(list => list.tasks.map(task =>
-                  <Task
-                     key={task.id}
-                     task={task}
-                     title={list.title}
-                     list={list}
-                     deleteTask={() => deleteTask(task)}
-                  />))
-            }
+         
+         <hr />
+         <ul >
+            {filtredTasks.map(task => 
+               <Task
+                  key={task.id}
+                  task={task}
+               />)}
          </ul>
       </div>
    )
