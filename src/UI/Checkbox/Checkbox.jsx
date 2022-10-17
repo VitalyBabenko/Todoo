@@ -1,14 +1,16 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { toggleDone } from '../../asyncAction'
+import { tasksAPI } from '../../service/TasksService'
 import './Checkbox.scss'
 
 function Checkbox({ task }) {
-   const dispatch = useDispatch()
+   const [ updateTask ] = tasksAPI.useUpdateTaskMutation('')
+   
+   const handleUpdateDone = () => {
+      updateTask({...task, done: !task.done})
+   }
 
    return (
       <div className='checkbox' >
-         <input id={task.id} checked={task.done} onChange={() => dispatch(toggleDone(task))} type="checkbox" />
+         <input id={task.id} checked={task.done} onChange={handleUpdateDone} type="checkbox" />
          <label htmlFor={task.id} >
             <img src="/img/check.svg" alt="checkMark" />
          </label>

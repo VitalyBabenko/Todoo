@@ -11,10 +11,8 @@
       color: black;
       opacity: 0.7;
       width: fit-content;
-      max-width: 60%;
-      white-space: initial;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      max-width: calc(100% - 16rem);
+      overflow-wrap: break-word;
 
       cursor: default;
 
@@ -35,20 +33,27 @@
       padding: 5px 20px;
       color: white;
       font-size: 1rem;
+      cursor: pointer;
    }
 
    svg {
       display: flex;
       width: 30px;
-      margin-left: auto;
+      color: $font-color;
+      opacity: 0.7;
       cursor: pointer;
 
       &:hover {
          color: $pink;
+         opacity: 1;
       }
 
       &:active {
          lighting-color: $pink;
       }
+   }
+
+   svg.pencil {
+      margin-left: auto;
    }
 }

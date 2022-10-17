@@ -1,25 +1,14 @@
 @import "../../index.scss";
 
 .categories {
-   li {
+   .list {
       @include flex($justify: space-between, $align: flex-end);
       margin-left: 3px;
       font-size: 22px;
       line-height: 26px;
       color: $font-color;
       margin-bottom: 20px;
-
-      :hover {
-         .delete-item {
-            opacity: 0.4;
-         }
-      }
-
-      :active {
-         .delete-item {
-            opacity: 0.9;
-         }
-      }
+      text-decoration: none;
    }
 
    span {
@@ -29,12 +18,20 @@
       text-overflow: ellipsis;
    }
 
-   .delete-item {
+   svg {
       color: black;
-      opacity: 0.1;
+      opacity: 0.2;
+
+      &:hover {
+         opacity: 0.6;
+      }
+
+      &:active {
+         opacity: 0.8;
+      }
    }
 
-   .chosen {
+   .active {
       font-weight: 700;
       color: $pink;
    }

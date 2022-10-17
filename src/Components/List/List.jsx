@@ -1,44 +1,34 @@
-import React from 'react'
-import { useDispatch,useSelector } from 'react-redux'
-import { Link, useLocation,useNavigate } from 'react-router-dom'
-
+import {useNavigate, NavLink } from 'react-router-dom'
 import './List.scss'
 import { BiX } from "react-icons/bi"
-import { deleteList,deleteTask } from '../../asyncAction'
+import { tasksAPI } from '../../service/TasksService'
+import { listsAPI } from '../../service/ListsService'
 
 
-function List({ list }) {
-   const dispatch = useDispatch()
-   const location = useLocation()
+function List({ list, closeBurger }) {
+   const { data: tasks } = tasksAPI.useFetchAllTasksQuery('')
+   const [deleteTask] = tasksAPI.useDeleteTaskMutation('')
+   const [deleteList] = listsAPI.useDeleteListMutation('')
    const navigate = useNavigate()
-   const currentPage = +location.pathname.split('/').slice(-1)
-   const tasks = useSelector(state => state.tasks)
 
-   const removeList = (list) => {
-      tasks.forEach(task => {
-         console.log(+task.listId === +list.id)
-         if (+task.listId === +list.id) dispatch(deleteTask(task)) 
-      })
-      navigate('lists/1')
-      dispatch(deleteList(list))
+   const handlerDeleteList = (e) => {
+      e.stopPropagation()
+      e.preventDefault() 
+      navigate('/lists/all')
+      tasks.forEach(task =>
+         task.listId === list.id &&  setTimeout(deleteTask(task),1000) 
+      )
+      deleteList(list)
    }
-
+   
    return (
-      <Link to={`lists/${list.id}`} style={{ textDecoration: 'none' }} >
-         <li
-            className={currentPage === +list.id ? 'chosen' : ''} >
-            <span>{list.title}</span>
-            {list.id !== '1' &&
-               <BiX
-                  onClick={e => {
-                     e.preventDefault()
-                     e.stopPropagation()
-                     removeList(list)
-                  }}
-                  className='delete-item'
-               />}
-         </li>
-      </ Link>
+      <NavLink to={`lists/${list.id}`} onClick={closeBurger} className='list' >
+         <span>{list.title}</span>
+
+         {list.id !== 'all' &&
+            <BiX onClick={handlerDeleteList}/>}
+           
+      </NavLink>
    )
 }
 

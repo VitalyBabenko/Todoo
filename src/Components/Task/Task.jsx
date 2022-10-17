@@ -1,21 +1,22 @@
-import React from 'react'
 import './Task.scss'
-import { BiTrashAlt } from "react-icons/bi"
+import { BiTrashAlt,BiPencil } from "react-icons/bi"
 import Checkbox from '../../ui/Checkbox/Checkbox'
-import { deleteTask } from '../../asyncAction'
-import {useDispatch, useSelector} from "react-redux"
-import { useLocation } from 'react-router-dom'
+import { useLocation,useNavigate } from 'react-router-dom'
+import { tasksAPI } from '../../service/TasksService'
+import { listsAPI } from '../../service/ListsService'
 
 function Task({ task }) {
-   const dispatch = useDispatch();
-   const location = useLocation();
-   const currentPage = +location.pathname.split('/').slice(-1);
-   const lists = useSelector(state => state.lists)
-   
-   const getListName = () => {
-      let result = ''
-      lists.forEach(list => +list.id === +task.listId ? result = list.title : '')
-      return result
+   const navigate = useNavigate()
+   const location = useLocation()
+   const currentPage = location.pathname.split('/').slice(-1).join();
+   const { data: lists } = listsAPI.useFetchAllListsQuery('')
+   const [ updateTask] = tasksAPI.useUpdateTaskMutation('')
+   const [ deleteTask ] = tasksAPI.useDeleteTaskMutation('')
+   const parentList = lists.find(list => list.id === task.listId);
+   const handleDelete = async () => await deleteTask(task);
+   const handleUpdateValue = () => {
+      const newValue = prompt(`Change task value`, task.value)
+      if (newValue) updateTask({...task, value: newValue})
    }
   
    return (
@@ -23,10 +24,13 @@ function Task({ task }) {
          <Checkbox task={task} />
          <p>{task.value}</p>
 
-         {currentPage === 1 &&
-            <span>{getListName()}</span>}
+         {currentPage === 'all' &&
+            <span onClick={() => navigate(`/lists/${parentList.id}`)}>
+               {parentList.title}
+            </span>}
          
-         <BiTrashAlt onClick={() => dispatch(deleteTask(task))}/>
+         <BiPencil onClick={handleUpdateValue} className={'pencil'} />
+         <BiTrashAlt onClick={handleDelete} />
       </li>
    )
 }

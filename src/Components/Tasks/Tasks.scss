@@ -1,21 +1,17 @@
 @import "../../index.scss";
 
 .tasks {
+   position: relative;
    @include flex($direction: column);
-   width: 100%;
-   flex: 1;
-   padding: 2.8rem 2rem 2rem 2.5rem;
+   width: calc(100% - 12.7rem);
+   padding: 49px 2rem 2rem 2.5rem;
 
    h1 {
       font-weight: 700;
-      font-size: 1.8rem;
+      font-size: 30px;
       line-height: 37px;
       color: #1b1c1f;
       margin-bottom: 20px;
-   }
-
-   input[type="text"] {
-      width: 100%;
    }
 
    hr {
@@ -28,7 +24,9 @@
    }
 
    button {
-      align-self: flex-end;
+      position: absolute;
+      top: 103px;
+      right: 42px;
       margin: 10px 0 20px;
       width: 140px;
    }
@@ -36,7 +34,17 @@
 
 @media screen and (max-width: 803px) {
    .tasks {
-      padding: 1.5rem 2rem;
+      width: 100%;
+      padding: 1.5rem 2rem 2rem;
+
+      input {
+         margin-bottom: 10px;
+      }
+
+      button {
+         top: 77px;
+         right: 38px;
+      }
 
       hr {
          display: none;
