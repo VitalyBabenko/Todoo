@@ -28,17 +28,6 @@ npm start
 This will run locally and listening on port 3000 (http://localhost:3000)
 
 
-## API 
-
-The application uses [Mockapi](https://mockapi.io/) as a database in the file Service.js, <br>
-in this file you can replace baseURL and connect your database.
-
-```js
-const axiosСlassic = axios.create({
-   baseURL: $yourLink
-})
-```
-
 
 
 

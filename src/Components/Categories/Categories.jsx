@@ -1,65 +1,61 @@
-import React, { useState, useContext } from 'react'
-import './Categories.scss'
-import { TodoContext } from '../../context'
-import { ListServiсe, TaskServiсe } from '../../api/Serviсe'
-import List from '../List/List'
-import Button from '../../ui/Button/Button'
-import Input from '../../ui/Input/Input'
-import { useFetching } from '../../hooks/useFetching'
-
+import { useState } from "react";
+import "./Categories.scss";
+import List from "../List/List";
+import Button from "../Button/Button";
+import Input from "../Input/Input";
+import { Link } from "react-router-dom";
+import { listsAPI } from "../../service/ListsService";
+import { CategoriesLoader } from "../Loader/Loader";
 
 function Categories() {
-  const { lists, setLists, setChosenList, navigate } = useContext(TodoContext)
-  const [newList, setNewList] = useState('')
+  const [newList, setNewList] = useState("");
+  const [isBurgerChecked, setIsBurgerChecked] = useState(false);
+  const { data: lists, isLoading: isListsLoading } =
+    listsAPI.useFetchAllListsQuery("");
+  const [createList] = listsAPI.useCreateListMutation("");
 
-  const [addList, addListLoading] = useFetching(async () => {
-    if (newList.length) {
-      await ListServiсe.postList({ title: newList, id: '', tasks: [] })
-      const updatedList = await ListServiсe.getLists()
-      setLists(updatedList)
-    }
-    setNewList('')
-  })
-
-  const deleteList = async (deletedList) => {
-    await TaskServiсe.deleteTasksInList(deletedList)
-    await ListServiсe.deleteList(deletedList)
-    setLists(lists.filter(list => list.id !== deletedList.id))
-    navigate('/lists/1')
-    setChosenList(lists[0])
-  }
+  const handleCreateList = () => {
+    createList({ title: newList });
+    setNewList("");
+  };
 
   return (
-    <div className='categories' >
-      <img
-        className='categories__logo'
-        onClick={() => {
-          setChosenList(lists[0]);
-          navigate('/lists/1')
-        }}
-        src='/img/logo.svg' alt='logo' />
-      <ul className='categories__list'>
-        {lists.map(list =>
+    <div className="categories">
+      {isListsLoading && <CategoriesLoader />}
+
+      <Link to="/lists/all">
+        <img src="/img/logo.svg" alt="logo" />
+      </Link>
+
+      <label
+        className={isBurgerChecked ? "burgerChecked" : "burger"}
+        onClick={() => setIsBurgerChecked(!isBurgerChecked)}
+      >
+        <div className="line-top"></div>
+        <div className="line-middle"></div>
+        <div className="line-bottom"></div>
+      </label>
+
+      <nav className={isBurgerChecked ? "active" : ""}>
+        {lists.map((list) => (
           <List
             key={list.id}
             list={list}
-            deleteList={deleteList}
+            closeBurger={() => setIsBurgerChecked(false)}
           />
-        )}
-      </ul>
+        ))}
+      </nav>
+
       <Input
         value={newList}
-        onChange={e => setNewList(e.target.value)}
-        className='categories__input input'
+        onChange={(e) => setNewList(e.target.value)}
         type="text"
-        placeholder='New category' />
-      <Button
-        onClick={addList}
-        title={'Add'}
-        className={addListLoading ? 'categories__button loader' : 'categories__button'}
+        placeholder="New category"
       />
+
+      <Button onClick={handleCreateList} title={"Add"} />
     </div>
-  )
+  );
 }
 
-export default Categories
+export default Categories;

@@ -2,27 +2,141 @@
 
 .categories {
    @include flex($direction: column, $justify: flex-start);
-   padding: 25px;
-   width: 230px;
+   padding: 1.3rem;
+   width: 12.7rem;
    height: 100%;
    border-right: 1px solid #d8d8d8;
 
-   &__logo {
-      cursor: pointer;
+   a {
+      // Link
+      display: flex;
+      align-items: center;
+
+      img {
+         // logo
+         max-width: 230px;
+         cursor: pointer;
+      }
    }
 
-   &__list {
-      margin-top: 60px;
+   nav {
+      margin: 60px 0 20px;
       overflow: auto;
    }
 
-   &__input {
-      margin-top: 20px;
-   }
-
-   &__button {
+   button {
+      // createList
       align-self: flex-end;
       width: 70px;
       margin-top: 8px;
+   }
+
+   .burger {
+      display: none;
+   }
+}
+
+@media screen and (max-width: 1056px) {
+   .categories {
+      width: 12rem;
+   }
+}
+
+@media screen and (max-width: 803px) {
+   .categories {
+      @include flex($direction: row, $justify: space-between);
+      padding: 0 2rem;
+      width: 100%;
+      height: 75px;
+      margin-bottom: 0;
+      border-right: none;
+      border-bottom: 1px solid #d8d8d8;
+
+      nav {
+         position: absolute;
+         top: 15px;
+         left: 5vw;
+         padding: 4.8rem 10vw 3.5rem;
+         transition: all ease 0.3s;
+         width: 90vw;
+         border-bottom: 2px solid #d8d8d8;
+         border-radius: 5px;
+         background-color: #fff;
+         box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.25);
+         transform: scaleY(0);
+
+         a {
+            padding: 3px 8px;
+            border-bottom: 1px solid $pink;
+            border-radius: 5px;
+         }
+      }
+
+      input,
+      button {
+         position: absolute;
+         top: 6rem;
+         transform: scale(0);
+         z-index: 3;
+      }
+
+      nav.active {
+         border-radius: 5px;
+         transform: scaleY(1);
+         z-index: 3;
+
+         & ~ input {
+            width: 57vw;
+            left: 15vw;
+            transform: scale(1);
+         }
+
+         & ~ button {
+            margin-top: 0;
+            height: 38px;
+            right: 15vw;
+            transform: scale(1);
+         }
+      }
+
+      .burger {
+         @include flex($direction: column, $justify: space-between);
+         margin: auto 0;
+         width: 30px;
+         height: 20px;
+      }
+
+      .line-top,
+      .line-middle,
+      .line-middle::before,
+      .line-bottom {
+         content: "";
+         display: block;
+         height: 2px;
+         width: 100%;
+         background-color: #1b1c1f;
+         pointer-events: none;
+         transition: all 0.3s ease;
+      }
+
+      .burgerChecked {
+         @include flex($direction: column, $justify: space-between);
+         margin: auto 0;
+         width: 30px;
+         height: 20px;
+
+         .line-top,
+         .line-bottom {
+            transform: scale(0);
+         }
+
+         .line-middle {
+            transform: rotate(45deg);
+         }
+
+         .line-middle:before {
+            transform: rotate(-90deg);
+         }
+      }
    }
 }

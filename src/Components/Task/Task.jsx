@@ -1,29 +1,39 @@
-import React, { useContext } from 'react'
-import './Task.scss'
-import { BiTrashAlt } from "react-icons/bi"
-import Checkbox from '../../ui/Checkbox/Checkbox'
-import { TodoContext } from '../../context'
+import "./Task.scss";
+import { BiTrashAlt, BiPencil } from "react-icons/bi";
+import Checkbox from "../Checkbox/Checkbox";
+import { useLocation, useNavigate } from "react-router-dom";
+import { tasksAPI } from "../../service/TasksService";
+import { listsAPI } from "../../service/ListsService";
 
-function Task({ task, deleteTask, title, list }) {
-   const { setChosenList, navigate } = useContext(TodoContext)
+function Task({ task }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPage = location.pathname.split("/").slice(-1).join();
+  const { data: lists } = listsAPI.useFetchAllListsQuery("");
+  const [updateTask] = tasksAPI.useUpdateTaskMutation("");
+  const [deleteTask] = tasksAPI.useDeleteTaskMutation("");
+  const parentList = lists.find((list) => list.id === task.listId);
+  const handleDelete = async () => await deleteTask(task);
+  const handleUpdateValue = () => {
+    const newValue = prompt(`Change task value`, task.value);
+    if (newValue) updateTask({ ...task, value: newValue });
+  };
 
-   const changeChosenList = () => {
-      setChosenList(list)
-      navigate(`/lists/${list.id}`)
-   }
+  return (
+    <li className="task">
+      <Checkbox task={task} />
+      <p>{task.value}</p>
 
-   return (
-      <li className="task">
-         <Checkbox task={task} />
-         <p className='task__value' >{task.value}</p>
-         {title ?
-            <div onClick={changeChosenList} className="task__category">{title}</div> : ''}
-         <BiTrashAlt
-            className='task__delete-icon'
-            onClick={() => deleteTask(task)}
-         />
-      </li>
-   )
+      {currentPage === "all" && (
+        <span onClick={() => navigate(`/lists/${parentList.id}`)}>
+          {parentList.title}
+        </span>
+      )}
+
+      <BiPencil onClick={handleUpdateValue} className={"pencil"} />
+      <BiTrashAlt onClick={handleDelete} />
+    </li>
+  );
 }
 
-export default Task
+export default Task;

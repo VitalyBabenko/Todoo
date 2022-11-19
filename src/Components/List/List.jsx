@@ -1,31 +1,34 @@
-import React, { useContext } from 'react'
-import { TodoContext } from '../../context'
-import { BiX } from "react-icons/bi"
+import {useNavigate, NavLink } from 'react-router-dom'
 import './List.scss'
-import { Link } from 'react-router-dom'
+import { BiX } from "react-icons/bi"
+import { tasksAPI } from '../../service/TasksService'
+import { listsAPI } from '../../service/ListsService'
 
-function List({ list, deleteList }) {
-   const { setChosenList, currentPage } = useContext(TodoContext)
 
+function List({ list, closeBurger }) {
+   const { data: tasks } = tasksAPI.useFetchAllTasksQuery('')
+   const [deleteTask] = tasksAPI.useDeleteTaskMutation('')
+   const [deleteList] = listsAPI.useDeleteListMutation('')
+   const navigate = useNavigate()
+
+   const handlerDeleteList = (e) => {
+      e.stopPropagation()
+      e.preventDefault() 
+      navigate('/lists/all')
+      tasks.forEach(task =>
+         task.listId === list.id &&  setTimeout(deleteTask(task),1000) 
+      )
+      deleteList(list)
+   }
+   
    return (
-      <Link to={`lists/${list.id}`} style={{ textDecoration: 'none' }} >
-         <li
-            onClick={() => setChosenList(list)}
-            className={currentPage === +list.id ? 'categories__item chosen' : 'categories__item'} >
-            <span className='categories__title' >
-               {list.title}
-            </span>
-            {list.id !== '1' &&
-               <BiX
-                  onClick={e => {
-                     e.preventDefault()
-                     e.stopPropagation()
-                     deleteList(list)
-                  }}
-                  className='delete-item'
-               />}
-         </li>
-      </ Link>
+      <NavLink to={`lists/${list.id}`} onClick={closeBurger} className='list' >
+         <span>{list.title}</span>
+
+         {list.id !== 'all' &&
+            <BiX onClick={handlerDeleteList}/>}
+           
+      </NavLink>
    )
 }
 

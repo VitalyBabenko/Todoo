@@ -1,6 +1,6 @@
 @import "../../index.scss";
 
-.input {
+input[type="text"] {
    background: $grey;
    padding: 10px;
    border-radius: 8px;

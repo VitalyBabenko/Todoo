@@ -1,41 +1,53 @@
 @import "../../index.scss";
 
 .tasks {
-   @include flex($direction: column);
    position: relative;
-   flex: 1;
-   padding: 65px 40px 40px 55px;
+   @include flex($direction: column);
+   width: calc(100% - 12.7rem);
+   padding: 49px 2rem 2rem 2.5rem;
 
-   &__title {
+   h1 {
       font-weight: 700;
-      font-size: 31px;
+      font-size: 30px;
       line-height: 37px;
       color: #1b1c1f;
       margin-bottom: 20px;
    }
 
-   &__line {
+   hr {
       background-color: #d8d8d8;
       margin: 20px 0 20px;
    }
 
-   &__items {
+   ul {
       overflow: auto;
    }
 
-   &__undo {
-      text-align: center;
-      margin-top: 20px;
-      align-self: flex-end;
-      width: 150px;
+   button {
+      position: absolute;
+      top: 103px;
+      right: 42px;
+      margin: 10px 0 20px;
+      width: 140px;
    }
 }
 
-.new-task-btn {
-   position: absolute;
-   top: 118px;
-   right: 45px;
-   align-self: flex-end;
-   margin: 10px 0 20px;
-   width: 140px;
+@media screen and (max-width: 803px) {
+   .tasks {
+      width: 100%;
+      padding: 1.5rem 2rem 2rem;
+
+      input {
+         margin-bottom: 10px;
+      }
+
+      button {
+         top: 77px;
+         right: 38px;
+      }
+
+      hr {
+         display: none;
+      }
+   }
 }
