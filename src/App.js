@@ -15,10 +15,11 @@ function App() {
     isLoading: isListsLoading,
     isError,
   } = listsAPI.useFetchAllListsQuery("");
+
   const { isLoading: isTasksLoading } = tasksAPI.useFetchAllTasksQuery("");
 
   useEffect(() => {
-    navigate("lists/all");
+    navigate("lists/0");
   }, []);
 
   if (isError) return <ErrorPage />;

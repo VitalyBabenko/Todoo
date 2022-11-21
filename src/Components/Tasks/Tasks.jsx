@@ -15,14 +15,12 @@ function Tasks() {
   const { data: tasks, isLoading: isTasksLoading } =
     tasksAPI.useFetchAllTasksQuery("");
   const [createTask] = tasksAPI.useCreateTaskMutation();
-
   const pageTitle = lists.find((list) => list.id === currentPage).title;
 
   const taskFilter = (tasks) =>
-    currentPage === "all"
+    currentPage === "0"
       ? tasks
       : tasks.filter((task) => task.listId === currentPage);
-
   const filtredTasks = taskFilter(tasks);
 
   const handleCreate = async () => {

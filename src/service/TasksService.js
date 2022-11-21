@@ -2,7 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const tasksAPI = createApi({
   reducerPath: "tasksAPI",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://62c6bbd02b03e73a58d57240.mockapi.io/",
+  }),
   tagTypes: ["Task"],
   endpoints: (build) => ({
     fetchAllTasks: build.query({

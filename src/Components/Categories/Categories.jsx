@@ -6,6 +6,7 @@ import Input from "../Input/Input";
 import { Link } from "react-router-dom";
 import { listsAPI } from "../../service/ListsService";
 import { CategoriesLoader } from "../Loader/Loader";
+import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 
 function Categories() {
   const [newList, setNewList] = useState("");
@@ -23,8 +24,8 @@ function Categories() {
     <div className="categories">
       {isListsLoading && <CategoriesLoader />}
 
-      <Link to="/lists/all">
-        <img src="/img/logo.svg" alt="logo" />
+      <Link to="/lists/0">
+        <Logo />
       </Link>
 
       <label

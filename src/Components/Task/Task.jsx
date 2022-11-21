@@ -23,13 +23,11 @@ function Task({ task }) {
     <li className="task">
       <Checkbox task={task} />
       <p>{task.value}</p>
-
-      {currentPage === "all" && (
+      {currentPage === "0" && (
         <span onClick={() => navigate(`/lists/${parentList.id}`)}>
           {parentList.title}
         </span>
       )}
-
       <BiPencil onClick={handleUpdateValue} className={"pencil"} />
       <BiTrashAlt onClick={handleDelete} />
     </li>
