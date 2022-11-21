@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/babenko/static/css/main.adce6d11.css",
-    "main.js": "/babenko/static/js/main.5feb3969.js",
-    "static/media/logo.svg": "/babenko/static/media/logo.b855a0aeed54bbf279dc89acb5ac1500.svg",
-    "index.html": "/babenko/index.html",
-    "static/media/check.svg": "/babenko/static/media/check.d52ef2d400a88719819f1af6ea305d9f.svg",
-    "main.adce6d11.css.map": "/babenko/static/css/main.adce6d11.css.map",
-    "main.5feb3969.js.map": "/babenko/static/js/main.5feb3969.js.map"
+    "main.css": "/Todoo/static/css/main.adce6d11.css",
+    "main.js": "/Todoo/static/js/main.1f392709.js",
+    "static/media/logo.svg": "/Todoo/static/media/logo.b855a0aeed54bbf279dc89acb5ac1500.svg",
+    "index.html": "/Todoo/index.html",
+    "static/media/check.svg": "/Todoo/static/media/check.d52ef2d400a88719819f1af6ea305d9f.svg",
+    "main.adce6d11.css.map": "/Todoo/static/css/main.adce6d11.css.map",
+    "main.1f392709.js.map": "/Todoo/static/js/main.1f392709.js.map"
   },
   "entrypoints": [
     "static/css/main.adce6d11.css",
-    "static/js/main.5feb3969.js"
+    "static/js/main.1f392709.js"
   ]
 }
