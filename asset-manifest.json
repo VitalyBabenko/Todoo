@@ -1,13 +1,15 @@
 {
   "files": {
-    "main.css": "/Todoo/static/css/main.4e373246.css",
-    "main.js": "/Todoo/static/js/main.5730a346.js",
-    "index.html": "/Todoo/index.html",
-    "main.4e373246.css.map": "/Todoo/static/css/main.4e373246.css.map",
-    "main.5730a346.js.map": "/Todoo/static/js/main.5730a346.js.map"
+    "main.css": "/babenko/static/css/main.adce6d11.css",
+    "main.js": "/babenko/static/js/main.5feb3969.js",
+    "static/media/logo.svg": "/babenko/static/media/logo.b855a0aeed54bbf279dc89acb5ac1500.svg",
+    "index.html": "/babenko/index.html",
+    "static/media/check.svg": "/babenko/static/media/check.d52ef2d400a88719819f1af6ea305d9f.svg",
+    "main.adce6d11.css.map": "/babenko/static/css/main.adce6d11.css.map",
+    "main.5feb3969.js.map": "/babenko/static/js/main.5feb3969.js.map"
   },
   "entrypoints": [
-    "static/css/main.4e373246.css",
-    "static/js/main.5730a346.js"
+    "static/css/main.adce6d11.css",
+    "static/js/main.5feb3969.js"
   ]
 }
