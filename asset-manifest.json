@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Todoo/static/css/main.adce6d11.css",
-    "main.js": "/Todoo/static/js/main.0bc83281.js",
+    "main.js": "/Todoo/static/js/main.d4781870.js",
     "static/media/logo.svg": "/Todoo/static/media/logo.b855a0aeed54bbf279dc89acb5ac1500.svg",
     "index.html": "/Todoo/index.html",
     "static/media/check.svg": "/Todoo/static/media/check.d52ef2d400a88719819f1af6ea305d9f.svg",
     "main.adce6d11.css.map": "/Todoo/static/css/main.adce6d11.css.map",
-    "main.0bc83281.js.map": "/Todoo/static/js/main.0bc83281.js.map"
+    "main.d4781870.js.map": "/Todoo/static/js/main.d4781870.js.map"
   },
   "entrypoints": [
     "static/css/main.adce6d11.css",
-    "static/js/main.0bc83281.js"
+    "static/js/main.d4781870.js"
   ]
 }
