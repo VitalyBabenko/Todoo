@@ -24,7 +24,7 @@ function Task({ task }) {
       <Checkbox task={task} />
       <p>{task.value}</p>
       {currentPage === "0" && (
-        <span onClick={() => navigate(`/lists/${parentList.id}`)}>
+        <span onClick={() => navigate(`lists/${parentList.id}`)}>
           {parentList.title}
         </span>
       )}

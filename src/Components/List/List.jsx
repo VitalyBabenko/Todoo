@@ -13,7 +13,7 @@ function List({ list, closeBurger }) {
   const handlerDeleteList = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    navigate("/lists/0");
+    navigate("lists/0");
     tasks.forEach(
       (task) => task.listId === list.id && setTimeout(deleteTask(task), 1000)
     );

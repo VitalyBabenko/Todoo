@@ -36,7 +36,7 @@ function App() {
     <div className="app">
       <Categories />
       <Routes>
-        <Route path="/lists/all" element={<Tasks />} />
+        <Route path="lists/0" element={<Tasks />} />
         {lists.map((list) => (
           <Route key={list.id} path={`lists/${list.id}`} element={<Tasks />} />
         ))}
