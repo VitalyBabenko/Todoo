@@ -1,4 +1,4 @@
-@import "../../index.scss";
+@import "../../scss/index.scss";
 
 .categories {
   @include flex($direction: column, $justify: flex-start);
@@ -15,6 +15,7 @@
     svg:first-child {
       // logo
       max-width: 230px;
+      // margin-bottom: 50px;
       opacity: 1;
       cursor: pointer;
     }
@@ -25,8 +26,12 @@
     overflow: auto;
   }
 
+  input {
+    @extend %input;
+  }
+
   button {
-    // createList
+    @extend %button;
     align-self: flex-end;
     width: 70px;
     margin-top: 8px;

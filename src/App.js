@@ -1,47 +1,49 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { listsAPI } from "./service/ListsService";
-import { tasksAPI } from "./service/TasksService";
-import Categories from "./components/Categories/Categories";
-import Tasks from "./components/Tasks/Tasks";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
-import CategoriesLoader from "./components/Categories/CategoriesLoader";
-import TasksLoader from "./components/Tasks/TasksLoader";
+import { Categories } from "./components/Categories/Categories";
+import { Tasks } from "./components/Tasks/Tasks";
+import { ErrorPage } from "./components/ErrorPage/ErrorPage";
+import { appContext } from "./context";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+
+const allTasks = {
+  id: 0,
+  title: "All tasks",
+};
+
+// TODO: emptyTasksPage
 
 function App() {
-  let navigate = useNavigate();
-  const {
-    data: lists,
-    isLoading: isListsLoading,
-    isError,
-  } = listsAPI.useFetchAllListsQuery("");
-
-  const { isLoading: isTasksLoading } = tasksAPI.useFetchAllTasksQuery("");
+  const [currentCategory, setCurrentCategory] = useState(allTasks);
+  const [categories, setCategories] = useLocalStorage("categories", allTasks);
+  const [tasks, setTasks] = useLocalStorage("tasks", []);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    navigate("lists/0");
+    navigate("/All tasks");
+    // setCategories([allTasks]);
   }, []);
 
-  if (isError) return <ErrorPage />;
-  if (isListsLoading || isTasksLoading) {
-    return (
-      <div className="app">
-        <CategoriesLoader />
-        <TasksLoader />
-      </div>
-    );
-  }
-
   return (
-    <div className="app">
-      <Categories />
-      <Routes>
-        <Route path="lists/0" element={<Tasks />} />
-        {lists.map((list) => (
-          <Route key={list.id} path={`lists/${list.id}`} element={<Tasks />} />
-        ))}
-      </Routes>
-    </div>
+    <appContext.Provider
+      value={{
+        tasks,
+        setTasks,
+        categories,
+        setCategories,
+        currentCategory,
+        setCurrentCategory,
+      }}
+    >
+      <div className="app">
+        <Categories />
+
+        <Routes>
+          <Route path="/:title" element={<Tasks />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </div>
+    </appContext.Provider>
   );
 }
 

@@ -1,37 +1,53 @@
-import "./Task.scss";
+import style from "./Task.module.scss";
 import { BiTrashAlt, BiPencil } from "react-icons/bi";
-import Checkbox from "../Checkbox/Checkbox";
-import { useLocation, useNavigate } from "react-router-dom";
-import { tasksAPI } from "../../service/TasksService";
-import { listsAPI } from "../../service/ListsService";
+import { Checkbox } from "../Checkbox/Checkbox";
+import { useContext, useEffect } from "react";
+import { appContext } from "../../context";
+import { useNavigate, useParams } from "react-router-dom";
 
-function Task({ task }) {
+export const Task = ({ task }) => {
+  const { title } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-  const currentPage = location.pathname.split("/").slice(-1).join();
-  const { data: lists } = listsAPI.useFetchAllListsQuery("");
-  const [updateTask] = tasksAPI.useUpdateTaskMutation("");
-  const [deleteTask] = tasksAPI.useDeleteTaskMutation("");
-  const parentList = lists.find((list) => list.id === task.listId);
-  const handleDelete = async () => await deleteTask(task);
-  const handleUpdateValue = () => {
-    const newValue = prompt(`Change task value`, task.value);
-    if (newValue) updateTask({ ...task, value: newValue });
+  const { categories, currentCategory, setCurrentCategory, setTasks } =
+    useContext(appContext);
+  const parent = categories.find((category) => category.id === task.listId);
+
+  // const changeCategory = () => {
+  //   navigate(`/${parent.title}`);
+  // };
+
+  useEffect(() => {
+    setCurrentCategory(categories.find((category) => category.title === title));
+  }, [title]);
+
+  const changeValue = () => {
+    const newValue = prompt();
+    const updatedTask = { ...task, value: newValue };
+
+    if (newValue) {
+      setTasks((prev) =>
+        prev.map((item) => (item.id === task.id ? updatedTask : item))
+      );
+    }
+  };
+
+  const removeTask = () => {
+    setTasks((item) => item.filter((item) => item.id !== task.id));
   };
 
   return (
-    <li className="task">
+    <li className={style.task}>
       <Checkbox task={task} />
+
       <p>{task.value}</p>
-      {currentPage === "0" && (
-        <span onClick={() => navigate(`lists/${parentList.id}`)}>
-          {parentList.title}
-        </span>
-      )}
-      <BiPencil onClick={handleUpdateValue} className={"pencil"} />
-      <BiTrashAlt onClick={handleDelete} />
+      {/* TODO: change category onClick */}
+      {/* {currentCategory.id === 0 &&
+        {
+          <span onClick={changeCategory}>{parent.title}</span>
+        }} */}
+
+      <BiPencil onClick={changeValue} className={style.pencil} />
+      <BiTrashAlt onClick={removeTask} />
     </li>
   );
-}
-
-export default Task;
+};

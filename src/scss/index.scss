@@ -1,31 +1,9 @@
 @import "scss-reset/_reset.scss";
+@import "./mixins.scss";
+@import "./variables.scss";
+@import "./templates/button";
+@import "./templates/input";
 
-$pink: #ea5959;
-$white: #ffffff;
-$grey: #f3f3f3;
-$font-color: #525252;
-
-@mixin flex($direction: row, $align: initial, $justify: initial) {
-  display: flex;
-  flex-direction: $direction;
-  align-items: $align;
-  justify-content: $justify;
-}
-
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@mixin container($width, $max-width: 980px) {
-  width: $width;
-  max-width: $max-width;
-  margin: 0 auto;
-}
-
-$maxWidth: 1440;
-$minWidth: 380;
 html {
   font-size: calc(14px + 5 * ((100vw - 380px) / #{$maxWidth - $minWidth}));
 }
@@ -37,8 +15,6 @@ html {
 }
 
 body {
-  margin: 0;
-  width: 100%;
   font-family: "Lato", sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;

@@ -1,0 +1,18 @@
+@import "../variables";
+
+%button {
+  background: $pink;
+  border-radius: 4px;
+  padding: 5px;
+  color: white;
+
+  &:hover {
+    background: saturate($pink, 20%);
+    background: $pink-light;
+  }
+
+  &:active {
+    background-color: saturate($pink, 20%);
+    transform: scale(1.05);
+  }
+}
