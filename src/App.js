@@ -15,13 +15,12 @@ const allTasks = {
 
 function App() {
   const [currentCategory, setCurrentCategory] = useState(allTasks);
-  const [categories, setCategories] = useLocalStorage("categories", allTasks);
+  const [categories, setCategories] = useLocalStorage("categories", [allTasks]);
   const [tasks, setTasks] = useLocalStorage("tasks", []);
   const navigate = useNavigate();
 
   useEffect(() => {
     navigate("/All tasks");
-    // setCategories([allTasks]);
   }, []);
 
   return (
