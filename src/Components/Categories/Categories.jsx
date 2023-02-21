@@ -4,7 +4,7 @@ import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 import { useInput } from "../../hooks/useInput";
 import { CategoryItem } from "../CategoryItem/CategoryItem";
 import { nanoid } from "nanoid";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { appContext } from "../../context";
 
 export const Categories = () => {
@@ -12,11 +12,25 @@ export const Categories = () => {
   const input = useInput("");
 
   const addCategory = (newValue) => {
-    if (input.value) {
+    if (newValue) {
       setCategories([...categories, { id: nanoid(), title: newValue }]);
       input.setValue("");
     }
   };
+
+  useEffect(() => {
+    const addCategoryOnEnter = (e) => {
+      if (e.key === "Enter") {
+        addCategory(input.value);
+      }
+    };
+    input.ref.current.addEventListener("keydown", addCategoryOnEnter);
+
+    return () => {
+      input.ref.current.removeEventListener("keydown", addCategoryOnEnter);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [input.value]);
 
   return (
     <div className={style.categories}>
@@ -35,6 +49,7 @@ export const Categories = () => {
       </nav>
 
       <input
+        ref={input.ref}
         value={input.value}
         onChange={input.onChange}
         type="text"

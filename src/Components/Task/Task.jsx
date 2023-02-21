@@ -12,9 +12,9 @@ export const Task = ({ task }) => {
     useContext(appContext);
   const parent = categories.find((category) => category.id === task.listId);
 
-  // const changeCategory = () => {
-  //   navigate(`/${parent.title}`);
-  // };
+  const changeCategory = () => {
+    navigate(`/${parent.title}`);
+  };
 
   useEffect(() => {
     setCurrentCategory(categories.find((category) => category.title === title));
@@ -40,11 +40,10 @@ export const Task = ({ task }) => {
       <Checkbox task={task} />
 
       <p>{task.value}</p>
-      {/* TODO: change category onClick */}
-      {/* {currentCategory.id === 0 &&
-        {
-          <span onClick={changeCategory}>{parent.title}</span>
-        }} */}
+
+      {currentCategory.id === 0 && (
+        <span onClick={changeCategory}>{parent.title}</span>
+      )}
 
       <BiPencil onClick={changeValue} className={style.pencil} />
       <BiTrashAlt onClick={removeTask} />
