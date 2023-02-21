@@ -1,0 +1,18 @@
+@mixin flex($direction: row, $align: initial, $justify: initial) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin container($width, $max-width: 980px) {
+  width: $width;
+  max-width: $max-width;
+  margin: 0 auto;
+}

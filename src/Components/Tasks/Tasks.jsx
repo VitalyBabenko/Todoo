@@ -1,63 +1,49 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
-import "./Tasks.scss";
-import Button from "../Button/Button";
-import Task from "../Task/Task";
-import Input from "../Input/Input";
-import { listsAPI } from "../../service/ListsService";
-import { tasksAPI } from "../../service/TasksService";
+import { nanoid } from "nanoid";
+import { useContext } from "react";
+import { appContext } from "../../context";
+import { useInput } from "../../hooks/useInput";
+import { Task } from "../Task/Task";
+import style from "./Tasks.module.scss";
 
-function Tasks() {
-  const [newTask, setNewTask] = useState({ value: "" });
-  const location = useLocation();
-  const currentPage = location.pathname.split("/").slice(-1).join();
-  const { data: lists } = listsAPI.useFetchAllListsQuery("");
-  const { data: tasks, isLoading: isTasksLoading } =
-    tasksAPI.useFetchAllTasksQuery("");
-  const [createTask] = tasksAPI.useCreateTaskMutation();
-  const pageTitle = lists.find((list) => list.id === currentPage).title;
+export const Tasks = () => {
+  const { currentCategory, tasks, setTasks } = useContext(appContext);
+  const input = useInput("");
 
-  const taskFilter = (tasks) =>
-    currentPage === "0"
-      ? tasks
-      : tasks.filter((task) => task.listId === currentPage);
-  const filtredTasks = taskFilter(tasks);
+  const currentTasks = tasks.filter((task) => {
+    if (currentCategory.id === 0) return true;
+    return task.listId === currentCategory.id;
+  });
 
-  const handleCreate = async () => {
-    await createTask(newTask);
-    setNewTask({ value: "" });
+  const createTask = () => {
+    const newTask = {
+      id: nanoid(),
+      listId: currentCategory.id,
+      done: false,
+      value: input.value,
+    };
+    setTasks([...tasks, newTask]);
+    input.setValue("");
   };
 
   return (
-    <div className="tasks">
-      <h1>{pageTitle}</h1>
+    <div className={style.tasks}>
+      <h1>{currentCategory.title}</h1>
 
-      <Input
-        value={newTask.value}
-        onChange={(e) =>
-          setNewTask({
-            value: e.target.value,
-            listId: currentPage,
-            done: false,
-          })
-        }
-        placeholder={`Create task on '${pageTitle}' category`}
-        type="text"
+      <input
+        value={input.value}
+        onChange={input.onChange}
+        placeholder={`Create task on '${currentCategory.title}' category`}
       />
 
-      {newTask.value && (
-        <Button onClick={handleCreate} title={"Create new task"} />
-      )}
+      {input.value && <button onClick={createTask}>Create new task</button>}
 
       <hr />
 
       <ul>
-        {isTasksLoading === false
-          ? filtredTasks.map((task) => <Task key={task.id} task={task} />)
-          : ""}
+        {currentTasks.map((task) => (
+          <Task key={task.id} task={task} />
+        ))}
       </ul>
     </div>
   );
-}
-
-export default Tasks;
+};

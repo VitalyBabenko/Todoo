@@ -1,20 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-// import { BrowserRouter as Router } from "react-router-dom";
-import { Provider } from "react-redux";
-import "./index.scss";
 import App from "./App";
-import { HashRouter } from "react-router-dom";
-
-import { setupStore } from "./store/store";
-
-const store = setupStore();
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import "./scss/index.scss";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
-  <Provider store={store}>
-    <HashRouter>
-      <App />
-    </HashRouter>
-  </Provider>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 );

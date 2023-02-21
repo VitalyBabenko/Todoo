@@ -1,62 +1,47 @@
-import { useState } from "react";
-import "./Categories.scss";
-import List from "../List/List";
-import Button from "../Button/Button";
-import Input from "../Input/Input";
+import style from "./Categories.module.scss";
 import { Link } from "react-router-dom";
-import { listsAPI } from "../../service/ListsService";
-import { CategoriesLoader } from "../Loader/Loader";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
+import { useInput } from "../../hooks/useInput";
+import { CategoryItem } from "../CategoryItem/CategoryItem";
+import { nanoid } from "nanoid";
+import { useContext } from "react";
+import { appContext } from "../../context";
 
-function Categories() {
-  const [newList, setNewList] = useState("");
-  const [isBurgerChecked, setIsBurgerChecked] = useState(false);
-  const { data: lists, isLoading: isListsLoading } =
-    listsAPI.useFetchAllListsQuery("");
-  const [createList] = listsAPI.useCreateListMutation("");
+export const Categories = () => {
+  const { categories, setCategories } = useContext(appContext);
+  const input = useInput("");
 
-  const handleCreateList = () => {
-    createList({ title: newList });
-    setNewList("");
+  const addCategory = (newValue) => {
+    if (input.value) {
+      setCategories([...categories, { id: nanoid(), title: newValue }]);
+      input.setValue("");
+    }
   };
 
   return (
-    <div className="categories">
-      {isListsLoading && <CategoriesLoader />}
-
-      <Link to="/lists/0">
+    <div className={style.categories}>
+      <Link to="/All tasks">
         <Logo />
       </Link>
 
-      <label
-        className={isBurgerChecked ? "burgerChecked" : "burger"}
-        onClick={() => setIsBurgerChecked(!isBurgerChecked)}
-      >
-        <div className="line-top"></div>
-        <div className="line-middle"></div>
-        <div className="line-bottom"></div>
-      </label>
-
-      <nav className={isBurgerChecked ? "active" : ""}>
-        {lists.map((list) => (
-          <List
-            key={list.id}
-            list={list}
-            closeBurger={() => setIsBurgerChecked(false)}
+      <nav>
+        {categories.map((category) => (
+          <CategoryItem
+            key={category.id}
+            category={category}
+            setCategories={setCategories}
           />
         ))}
       </nav>
 
-      <Input
-        value={newList}
-        onChange={(e) => setNewList(e.target.value)}
+      <input
+        value={input.value}
+        onChange={input.onChange}
         type="text"
         placeholder="New category"
       />
 
-      <Button onClick={handleCreateList} title={"Add"} />
+      <button onClick={() => addCategory(input.value)}>Add</button>
     </div>
   );
-}
-
-export default Categories;
+};

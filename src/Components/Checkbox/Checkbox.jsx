@@ -1,16 +1,20 @@
-import { tasksAPI } from "../../service/TasksService";
+import { useContext } from "react";
 import { ReactComponent as CheckIcon } from "../../assets/img/check.svg";
-import "./Checkbox.scss";
+import { appContext } from "../../context";
+import style from "./Checkbox.module.scss";
 
-function Checkbox({ task }) {
-  const [updateTask] = tasksAPI.useUpdateTaskMutation("");
+export const Checkbox = ({ task }) => {
+  const { tasks, setTasks } = useContext(appContext);
 
   const handleUpdateDone = () => {
-    updateTask({ ...task, done: !task.done });
+    const updatedTask = { ...task, done: !task.done };
+    setTasks((prev) =>
+      prev.map((item) => (item.id === task.id ? updatedTask : item))
+    );
   };
 
   return (
-    <div className="checkbox">
+    <div className={style.checkbox}>
       <input
         id={task.id}
         checked={task.done}
@@ -22,6 +26,4 @@ function Checkbox({ task }) {
       </label>
     </div>
   );
-}
-
-export default Checkbox;
+};
