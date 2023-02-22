@@ -1,0 +1,57 @@
+@import "../../scss/index.scss";
+
+.burger,
+.burgerChecked {
+  display: none;
+}
+
+@media screen and (max-width: 803px) {
+  .burger,
+  .burgerChecked {
+    @include flex($direction: column, $justify: space-between);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 2rem;
+    margin: auto 0;
+    width: 30px;
+    height: 20px;
+
+    .lineTop,
+    .lineMiddle,
+    .lineMiddle::before,
+    .lineBottom {
+      content: "";
+      display: block;
+      height: 2px;
+      width: 100%;
+      background-color: #1b1c1f;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+  }
+
+  .burgerChecked {
+    .lineTop,
+    .lineBottom {
+      transform: scale(0);
+    }
+
+    .lineMiddle {
+      transform: rotate(45deg);
+    }
+
+    .lineMiddle:before {
+      transform: rotate(-90deg);
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .burger,
+  .burgerChecked {
+    right: 1.5rem;
+    width: 28px;
+    height: 18px;
+  }
+}
