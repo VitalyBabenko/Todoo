@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { appContext } from "../../context";
 import { useInput } from "../../hooks/useInput";
 import { Task } from "../Task/Task";
@@ -16,11 +16,11 @@ export const Tasks = () => {
         return task.listId === currentCategory.id;
       });
     }
-
     return [];
   };
 
-  const createTask = () => {
+  const createTask = (e) => {
+    e.preventDefault();
     const newTask = {
       id: nanoid(),
       listId: currentCategory.id,
@@ -33,30 +33,17 @@ export const Tasks = () => {
     }
   };
 
-  useEffect(() => {
-    const addCategoryOnEnter = (e) => {
-      if (e.key === "Enter") {
-        createTask(input.value);
-      }
-    };
-    input.ref.current.addEventListener("keydown", addCategoryOnEnter);
-
-    return () => {
-      input.ref.current.removeEventListener("keydown", addCategoryOnEnter);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [input.value]);
-
   return (
     <div className={style.tasks}>
       <h1>{currentCategory.title}</h1>
 
-      <input
-        ref={input.ref}
-        value={input.value}
-        onChange={input.onChange}
-        placeholder={`Create task on '${currentCategory.title}' category`}
-      />
+      <form onSubmit={createTask}>
+        <input
+          value={input.value}
+          onChange={input.onChange}
+          placeholder={`Create task on '${currentCategory.title}' category`}
+        />
+      </form>
 
       {input.value && <button onClick={createTask}>Create new task</button>}
 

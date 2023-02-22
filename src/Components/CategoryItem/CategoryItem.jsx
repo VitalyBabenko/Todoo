@@ -4,9 +4,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { BiX } from "react-icons/bi";
 import { appContext } from "../../context";
 
-export const CategoryItem = (props) => {
+export const CategoryItem = ({ category, setCategories, closeBurger }) => {
   const navigate = useNavigate();
-  const { category, setCategories } = props;
   const { currentCategory, setCurrentCategory, setTasks } =
     useContext(appContext);
 
@@ -23,9 +22,14 @@ export const CategoryItem = (props) => {
     }
   };
 
+  const onCategoryClick = () => {
+    setCurrentCategory(category);
+    closeBurger();
+  };
+
   return (
     <NavLink
-      onClick={() => setCurrentCategory(category)}
+      onClick={onCategoryClick}
       to={`/${category.title}`}
       className={isCurrent ? style.active : style.categoryItem}
     >

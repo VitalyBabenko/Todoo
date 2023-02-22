@@ -2,6 +2,7 @@
 
 .categories {
   @include flex($direction: column, $justify: flex-start);
+  position: relative;
   padding: 1.3rem;
   width: 12.7rem;
   height: 100%;
@@ -15,7 +16,6 @@
     svg:first-child {
       // logo
       max-width: 230px;
-      // margin-bottom: 50px;
       opacity: 1;
       cursor: pointer;
     }
@@ -26,8 +26,11 @@
     overflow: auto;
   }
 
-  input {
-    @extend %input;
+  form {
+    input {
+      @extend %input;
+      width: 100%;
+    }
   }
 
   button {
@@ -61,7 +64,7 @@
     nav {
       position: absolute;
       top: 15px;
-      left: 5vw;
+      left: 0;
       padding: 4.8rem 10vw 3.5rem;
       transition: all ease 0.3s;
       width: 90vw;
@@ -78,70 +81,48 @@
       }
     }
 
-    input,
+    form input,
     button {
       position: absolute;
-      top: 6rem;
+      top: 6.5rem;
       transform: scale(0);
       z-index: 3;
     }
 
     nav.active {
+      padding: 6rem 6vw 3rem;
       border-radius: 5px;
       transform: scaleY(1);
       z-index: 3;
 
-      & ~ input {
+      & ~ form input {
         width: 57vw;
-        left: 15vw;
+        left: 6vw;
         transform: scale(1);
       }
 
       & ~ button {
         margin-top: 0;
         height: 38px;
-        right: 15vw;
+        right: 6vw;
         transform: scale(1);
       }
     }
+  }
+}
 
-    .burger {
-      @include flex($direction: column, $justify: space-between);
-      margin: auto 0;
-      width: 30px;
-      height: 20px;
+@media screen and (max-width: 400px) {
+  .categories {
+    padding: 0 1.5rem;
+    a {
+      width: 140px;
     }
 
-    .line-top,
-    .line-middle,
-    .line-middle::before,
-    .line-bottom {
-      content: "";
-      display: block;
-      height: 2px;
-      width: 100%;
-      background-color: #1b1c1f;
-      pointer-events: none;
-      transition: all 0.3s ease;
-    }
-
-    .burgerChecked {
-      @include flex($direction: column, $justify: space-between);
-      margin: auto 0;
-      width: 30px;
-      height: 20px;
-
-      .line-top,
-      .line-bottom {
-        transform: scale(0);
-      }
-
-      .line-middle {
-        transform: rotate(45deg);
-      }
-
-      .line-middle:before {
-        transform: rotate(-90deg);
+    nav.active {
+      @include flex($direction: column, $justify: center);
+      padding: 5rem 6vw 3rem;
+      a {
+        width: 97%;
       }
     }
   }

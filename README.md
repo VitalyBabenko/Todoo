@@ -28,8 +28,6 @@ npm start
 
 - **ReactJS**
 - **React Router v6**
-- **Redux toolkit**
-- **RTK Query**
 - **Axios**
 - **SCSS**
 
