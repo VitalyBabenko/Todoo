@@ -6,8 +6,11 @@
   width: calc(100% - 12.7rem);
   padding: 49px 2rem 2rem 2.5rem;
 
-  input {
-    @extend %input;
+  form {
+    input {
+      width: 100%;
+      @extend %input;
+    }
   }
 
   h1 {
@@ -53,6 +56,23 @@
 
     hr {
       display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .tasks {
+    padding: 1.5rem 1.5rem 2rem;
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      top: 74.5px;
+      right: 2rem;
+      width: 115px;
     }
   }
 }
